@@ -1,8 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./componenets/Login";
-import Registration from "./componenets/Registration";
-import GeneratePass from "./componenets/GenetratePass";
-import SelectTimeSlot from "./componenets/SelectTimeSlot"
+import Login from "./components/Login.js";
+import Registration from "./components/Registration.js";
+import GeneratePass from "./components/GeneratePass.js";
+import SelectTimeSlot from "./components/SelectTimeSlot.js";
+import MyAppointments from "./components/MyAppointments.js";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/register" element={<Registration />} />
           <Route path="/appointment" element={<GeneratePass />} />
           <Route path="/book" element={<SelectTimeSlot />} />
+          <Route path="/myappointments" element={<MyAppointments />} />
         </Routes>
       </Router>
     </div>
