@@ -1,12 +1,20 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate(); // Use navigate for redirection
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(`Logined as: ${username}`);
+    if (username && password){
+      alert(`Logined as: ${username}`);
+      navigate("/appointment"); // Redirect after successful login
+    }
+    else{
+      alert('Invalid username or password' );
+    }
   };
 
   return (

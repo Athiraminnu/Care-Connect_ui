@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./componenets/Login";
 import Registration from "./componenets/Registration";
+import GeneratePass from "./componenets/GenetratePass";
+import SelectTimeSlot from "./componenets/SelectTimeSlot"
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Registration />} />
+          <Route path="/appointment" element={<GeneratePass />} />
+          <Route path="/book" element={<SelectTimeSlot />} />
         </Routes>
       </Router>
     </div>
