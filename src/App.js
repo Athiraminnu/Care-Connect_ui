@@ -28,7 +28,7 @@ function App() {
           
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Registration />} />
+          <Route path="/register" element={<Registration  />} />
           <Route path="/appointment" element={<GeneratePass />} />
           <Route path="/book" element={<SelectTimeSlot />} />
           <Route path="/myappointments" element={<MyAppointments />} />
