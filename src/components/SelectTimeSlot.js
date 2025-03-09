@@ -2,8 +2,19 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 function SelectTimeSlot() {
   const timings = [
-    "10AM", "10.30AM", "11AM", "11.30AM", "12PM", "12.30PM",
-    "3.30PM", "4.00PM", "4.30PM", "5.00PM", "5.30PM", "6.00PM", "6.30PM"
+    "10AM",
+    "10.30AM",
+    "11AM",
+    "11.30AM",
+    "12PM",
+    "12.30PM",
+    "3.30PM",
+    "4.00PM",
+    "4.30PM",
+    "5.00PM",
+    "5.30PM",
+    "6.00PM",
+    "6.30PM",
   ];
 
   const [selectedTime, setSelectedTime] = useState("");
@@ -12,25 +23,27 @@ function SelectTimeSlot() {
   const location = useLocation();
   const selectedDate = location.state?.selectedDate || "No date selected";
 
-
   const handleConfirmation = async () => {
     const response = await fetch("http://127.0.0.1:8000/book/", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        
-        body: JSON.stringify({ value: selectedTime, dateOfApp: {selectedDate}, userName : {user} }),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      body: JSON.stringify({
+        value: selectedTime,
+        dateOfApp: selectedDate,
+        userName: user,
+      }),
     });
 
     const data = await response.json();
     console.log(data);
 
-    if (response.ok){
-      alert("Booking confirmed")
-    }
-    else {
-      alert("try again")
+    if (response.ok) {
+      alert("Booking confirmed");
+    } else {
+      alert("try again");
     }
   };
 
@@ -59,16 +72,15 @@ function SelectTimeSlot() {
               type="button"
               style={{
                 border: "none",
-                backgroundColor: selectedTime === time
-                  ? "#ffc107"
-                  : "#28a745",
+                backgroundColor: selectedTime === time ? "#ffc107" : "#28a745",
                 color: "white",
                 width: "80px",
                 height: "40px",
                 borderRadius: "5px",
               }}
-              onClick={() => setSelectedTime(time)}>
-            Book
+              onClick={() => setSelectedTime(time)}
+            >
+              Book
             </button>
           </div>
         ))}
