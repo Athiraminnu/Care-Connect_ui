@@ -4,6 +4,7 @@ import Registration from "./components/Registration.js";
 import GeneratePass from "./components/GeneratePass.js";
 import SelectTimeSlot from "./components/SelectTimeSlot.js";
 import MyAppointments from "./components/MyAppointments.js";
+import AllAppointments from "./components/AllAppointments.js";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path="/appointment" element={<GeneratePass />} />
           <Route path="/book" element={<SelectTimeSlot />} />
           <Route path="/myappointments" element={<MyAppointments />} />
+          <Route path="/viewappiontments" element={<AllAppointments />} />
         </Routes>
       </Router>
     </div>
