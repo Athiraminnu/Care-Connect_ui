@@ -8,8 +8,21 @@ function AllAppointments() {
   useEffect(() => {
     if (selectedDate) {
       fetchAppointmentsByDate(selectedDate);
+    } else {
+      fetchAllAppointments();
     }
   }, [selectedDate]);
+
+  const fetchAllAppointments = () => {
+    axios
+      .get(`http://127.0.0.1:8000/viewappointments/`)
+      .then((response) => {
+        setAppointmentList(response.data);
+      })
+      .catch((error) => {
+        alert("AN ERROR OCCUREDED WHILE FETCHING THE DETAILS !", error);
+      });
+  };
 
   const fetchAppointmentsByDate = (date) => {
     const formattedDate = new Date(date).toISOString().split("T")[0]; // Convert to YYYY-MM-DD
@@ -44,7 +57,7 @@ function AllAppointments() {
       textAlign: "center",
     },
     td: {
-      background: "rgba(255, 255, 255, 0.2)",
+      background: "rgba(255, 255, 255, 0.3)",
       padding: "8px",
       border: "1px solid #ddd",
       textAlign: "center",
@@ -59,11 +72,29 @@ function AllAppointments() {
 
   return (
     <div>
-      <label>Filter By Date :</label>
+      <label
+        style={{
+          marginLeft: "40%",
+          marginTop: "5%",
+          marginBottom: "2%",
+          fontWeight: "bold",
+          
+        }}
+      >
+        Filter By Date :{" "}
+      </label>
       <input
         type="date"
         value={selectedDate}
         onChange={(e) => setSelectedDate(e.target.value)}
+        style={{
+          border: "2px solid black",
+          marginLeft: "5px",
+          borderRadius: "5px",
+          padding: "5px",
+          alignItems: "center",
+          background: "rgba(255, 255, 255, 0.2)"
+        }}
       />
       <div style={styles.tableContainer}>
         <table style={styles.table}>
@@ -76,17 +107,7 @@ function AllAppointments() {
           </thead>
           <tbody>
             {appointmentList.map((appointment) => (
-              <tr
-                key={appointment.id}
-                style={styles.trHover}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.background = "#f1f1f1")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.background =
-                    "rgba(255, 255, 255, 0.8)")
-                }
-              >
+              <tr key={appointment.id}>
                 <td style={styles.td}>{appointment.date}</td>
                 <td style={styles.td}>{appointment.time}</td>
                 <td style={styles.td}>{appointment.name}</td>

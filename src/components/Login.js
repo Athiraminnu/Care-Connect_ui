@@ -8,16 +8,29 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (username && password){
-      alert(`Logined as: ${username}`);
-      localStorage.setItem("user", username);
-      navigate("/appointment", {state: {user :username }}); // Redirect after successful login
-    }
-    else{
-      alert('Invalid username or password' );
+
+    // Admin Credentials
+    const adminUser = "doctor";
+    const adminPassword = "Dr@1234hai";
+
+    if (username && password) {
+      if (username === adminUser && password === adminPassword) {
+        // Admin Login
+        alert(`Logged in as Admin: ${username}`);
+        localStorage.setItem("user", username);
+        localStorage.setItem("role", "admin"); // Store role
+        navigate("/viewappointments", { state: { user: username } }); // Redirect admin
+      } else {
+        // Regular User Login
+        alert(`Logged in as User: ${username}`);
+        localStorage.setItem("user", username);
+        localStorage.setItem("role", "user"); // Store role
+        navigate("/appointment", { state: { user: username } }); // Redirect user
+      }
+    } else {
+      alert("Invalid username or password");
     }
   };
-
 
   return (
     <div
@@ -62,7 +75,7 @@ function Login() {
           />
         </div>
 
-        <button type="submit" value={username} className="btn btn-primary w-100">Login</button>
+        <button type="submit" className="btn btn-primary w-100">Login</button>
         <div style={{ textAlign: "center", marginTop: "10px" }}>
           <a href="/register" style={{ fontSize: "14px" }}>New Here? Register Here</a>
         </div>
