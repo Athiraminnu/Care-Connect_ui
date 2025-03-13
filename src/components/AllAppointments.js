@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function AllAppointments() {
   const [appointmentList, setAppointmentList] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
-
+  const navigate = useNavigate(); 
   useEffect(() => {
     if (selectedDate) {
       fetchAppointmentsByDate(selectedDate);
@@ -35,6 +36,24 @@ function AllAppointments() {
         alert("Error while fetching the data !", error);
       });
   };
+
+    const handleLogout = () => {
+      fetch("http://127.0.0.1:8000/logout", {
+        method: "POST",
+      })
+        .then((response) => {
+          if (response.ok) {
+            alert("Logged out successfully!");
+            navigate("/"); 
+          } else {
+            alert("Logout failed.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    };
+
 
   const styles = {
     tableContainer: {
@@ -72,49 +91,67 @@ function AllAppointments() {
 
   return (
     <div>
-      <label
+      <button
+        type="button"
+        onClick={handleLogout}
         style={{
-          marginLeft: "40%",
-          marginTop: "5%",
-          marginBottom: "2%",
-          fontWeight: "bold",
-          
+          marginTop: "2%",
+          marginLeft: "92%",
+          padding: "6px",
+          width: "7%",
+          backgroundColor: "blue",
+          color: "white",
+          borderRadius: "4px",
+          border: "none",
         }}
       >
-        Filter By Date :{" "}
-      </label>
-      <input
-        type="date"
-        value={selectedDate}
-        onChange={(e) => setSelectedDate(e.target.value)}
-        style={{
-          border: "2px solid black",
-          marginLeft: "5px",
-          borderRadius: "5px",
-          padding: "5px",
-          alignItems: "center",
-          background: "rgba(255, 255, 255, 0.2)"
-        }}
-      />
-      <div style={styles.tableContainer}>
-        <table style={styles.table}>
-          <thead>
-            <tr>
-              <th style={styles.th}>DATE</th>
-              <th style={styles.th}>TIME</th>
-              <th style={styles.th}>PATIENT NAME</th>
-            </tr>
-          </thead>
-          <tbody>
-            {appointmentList.map((appointment) => (
-              <tr key={appointment.id}>
-                <td style={styles.td}>{appointment.date}</td>
-                <td style={styles.td}>{appointment.time}</td>
-                <td style={styles.td}>{appointment.name}</td>
+        Logout
+      </button>
+
+      <div>
+        <label
+          style={{
+            marginLeft: "40%",
+            marginTop: "5%",
+            marginBottom: "2%",
+            fontWeight: "bold",
+          }}
+        >
+          Filter By Date :{" "}
+        </label>
+        <input
+          type="date"
+          value={selectedDate}
+          onChange={(e) => setSelectedDate(e.target.value)}
+          style={{
+            border: "2px solid black",
+            marginLeft: "5px",
+            borderRadius: "5px",
+            padding: "5px",
+            alignItems: "center",
+            background: "rgba(255, 255, 255, 0.2)",
+          }}
+        />
+        <div style={styles.tableContainer}>
+          <table style={styles.table}>
+            <thead>
+              <tr>
+                <th style={styles.th}>DATE</th>
+                <th style={styles.th}>TIME</th>
+                <th style={styles.th}>PATIENT NAME</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {appointmentList.map((appointment) => (
+                <tr key={appointment.id}>
+                  <td style={styles.td}>{appointment.date}</td>
+                  <td style={styles.td}>{appointment.time}</td>
+                  <td style={styles.td}>{appointment.name}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

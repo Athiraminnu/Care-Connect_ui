@@ -8,28 +8,41 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     // Admin Credentials
-    const adminUser = "doctor";
-    const adminPassword = "Dr@1234hai";
+    // const adminUser = "doctor";
+    // const adminPassword = "Dr@1234hai";
 
-    if (username && password) {
-      if (username === adminUser && password === adminPassword) {
-        // Admin Login
-        alert(`Logged in as Admin: ${username}`);
-        localStorage.setItem("user", username);
-        localStorage.setItem("role", "admin"); // Store role
-        navigate("/viewappointments", { state: { user: username } }); // Redirect admin
-      } else {
-        // Regular User Login
-        alert(`Logged in as User: ${username}`);
-        localStorage.setItem("user", username);
-        localStorage.setItem("role", "user"); // Store role
-        navigate("/appointment", { state: { user: username } }); // Redirect user
-      }
-    } else {
-      alert("Invalid username or password");
-    }
+    fetch("http://127.0.0.1:8000/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message) {
+          if (username && password) {
+            if (username === "doctor" && password === "Dr@1234hai") {
+              alert(`Logged in as Admin: ${username}`);
+              localStorage.setItem("user", username);
+              localStorage.setItem("role", "admin");
+              navigate("/viewappointments", { state: { user: username } });
+            } else {
+              // Regular User Login
+              alert(`Logged in as User: ${username}`);
+              localStorage.setItem("user", username);
+              localStorage.setItem("role", "user"); // Store role
+              navigate("/appointment", { state: { user: username } }); // Redirect user
+            }
+          }
+        } else {
+          alert("Invalid username or password");
+        }
+      })
+      .catch((error) => {
+        console.error("Error : ", error);
+      });
   };
 
   return (
@@ -47,7 +60,10 @@ function Login() {
         boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)", // Subtle shadow
       }}
     >
-      <h4 className="my-2" style={{ textAlign: "center" }}> Login </h4>
+      <h4 className="my-2" style={{ textAlign: "center" }}>
+        {" "}
+        Login{" "}
+      </h4>
       <form onSubmit={handleSubmit}>
         <div className="form-group my-2">
           <label htmlFor="username">Username:</label>
@@ -75,9 +91,13 @@ function Login() {
           />
         </div>
 
-        <button type="submit" className="btn btn-primary w-100">Login</button>
+        <button type="submit" className="btn btn-primary w-100">
+          Login
+        </button>
         <div style={{ textAlign: "center", marginTop: "10px" }}>
-          <a href="/register" style={{ fontSize: "14px" }}>New Here? Register Here</a>
+          <a href="/register" style={{ fontSize: "14px" }}>
+            New Here? Register Here
+          </a>
         </div>
       </form>
     </div>
