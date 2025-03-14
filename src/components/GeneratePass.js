@@ -157,7 +157,7 @@ function GeneratePass() {
         }}
       >
         <a
-          href="/myappointments"
+          href="/userappointments"
           style={{ textDecoration: "none", color: "black" }}
         >
           My Appointments

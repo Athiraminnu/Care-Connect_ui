@@ -51,13 +51,13 @@ function Login() {
       style={{
         position: "absolute", // Position above image
         top: "50%", // Center vertically
-        left: "50%", // Center horizontally
-        transform: "translate(-50%, -50%)", // Adjust exact centering
+        left: "50%", 
+        transform: "translate(-50%, -50%)", 
         width: "350px",
-        background: "rgba(255, 255, 255, 0.5)", // Semi-transparent background
+        background: "rgba(255, 255, 255, 0.5)",
         padding: "20px",
         borderRadius: "10px",
-        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)", // Subtle shadow
+        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)", 
       }}
     >
       <h4 className="my-2" style={{ textAlign: "center" }}>
