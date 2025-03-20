@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 function MyAppointments() {
   const [myAppointmentList, setMyAppointmentList] = useState([]);
   const user = localStorage.getItem("user") || "Guest";
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchAllMyAppointments();
@@ -15,7 +15,7 @@ function MyAppointments() {
     axios
       .get("http://127.0.0.1:8000/myappointments/", {
         headers: {
-          "UserInfo": user,
+          UserInfo: user,
         },
       })
       .then((response) => {
@@ -25,23 +25,46 @@ function MyAppointments() {
         alert("An error occurred while fetching the details!", error);
       });
   };
-    const handleLogout = () => {
-      fetch("http://127.0.0.1:8000/logout", {
-        method: "POST",
-      })
-        .then((response) => {
-          if (response.ok) {
-            alert("Logged out successfully!");
-            navigate("/"); 
-          } else {
-            alert("Logout failed.");
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    };
 
+  const handleLogout = () => {
+    fetch("http://127.0.0.1:8000/logout", {
+      method: "POST",
+    })
+      .then((response) => {
+        if (response.ok) {
+          alert("Logged out successfully!");
+          navigate("/");
+        } else {
+          alert("Logout failed.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+  const handleCancel = (time, date) => {
+    fetch("http://127.0.0.1:8000/cancel/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        cancelTime: time,
+        cancelDate : date,
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          alert("Canceled Sucessfully !");
+        } else {
+          alert("Cancellation unsucessfull !");
+        }
+      })
+      .catch((error) => {
+        console.error("Error :", error);
+      });
+  };
 
   const styles = {
     tableContainer: {
@@ -95,25 +118,42 @@ function MyAppointments() {
       >
         Logout
       </button>
-        <div style={styles.tableContainer}>
-          <table style={styles.table}>
-            <thead>
-              <tr>
-                <th style={styles.th}>DATE</th>
-                <th style={styles.th}>TIME</th>
+      <div style={styles.tableContainer}>
+        <table style={styles.table}>
+          <thead>
+            <tr>
+              <th style={styles.th}>DATE</th>
+              <th style={styles.th}>TIME</th>
+              <th style={styles.th}>ACTION</th>
+            </tr>
+          </thead>
+          <tbody>
+            {myAppointmentList.map((appointment) => (
+              <tr key={appointment.id}>
+                <td style={styles.td}>{appointment.date}</td>
+                <td style={styles.td}>{appointment.time}</td>
+                <td style={styles.td}>
+                  <button
+                    className="bg bg-danger"
+                    style={{
+                      color: "white",
+                      borderRadius: "4px",
+                      padding: "4px",
+                      border: "none",
+                      width: "40%",
+                    }}
+                    type="submit"
+                    onClick={() => handleCancel(appointment.time, appointment.date)}
+                  >
+                    Cancel
+                  </button>{" "}
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {myAppointmentList.map((appointment) => (
-                <tr key={appointment.id}>
-                  <td style={styles.td}>{appointment.date}</td>
-                  <td style={styles.td}>{appointment.time}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
+    </div>
   );
 }
 
