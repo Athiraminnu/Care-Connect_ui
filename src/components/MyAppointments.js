@@ -32,14 +32,14 @@ function MyAppointments() {
     })
       .then((response) => {
         if (response.ok) {
-          alert("Logged out successfully!");
+          alert("Logged out successfully!")
           navigate("/");
         } else {
           alert("Logout failed.");
         }
       })
       .catch((error) => {
-        console.error("Error:", error);
+        console.error("Error:", error);   
       });
   };
 
@@ -51,12 +51,13 @@ function MyAppointments() {
       },
       body: JSON.stringify({
         cancelTime: time,
-        cancelDate : date,
+        cancelDate: date,
       }),
     })
       .then((response) => {
         if (response.ok) {
           alert("Canceled Sucessfully !");
+          window.location.reload();
         } else {
           alert("Cancellation unsucessfull !");
         }
@@ -119,6 +120,7 @@ function MyAppointments() {
         Logout
       </button>
       <div style={styles.tableContainer}>
+       <h2>Today's Date: {new Date().toLocaleDateString()}</h2>
         <table style={styles.table}>
           <thead>
             <tr>
@@ -143,7 +145,9 @@ function MyAppointments() {
                       width: "40%",
                     }}
                     type="submit"
-                    onClick={() => handleCancel(appointment.time, appointment.date)}
+                    onClick={() =>
+                      handleCancel(appointment.time, appointment.date)
+                    }
                   >
                     Cancel
                   </button>{" "}
