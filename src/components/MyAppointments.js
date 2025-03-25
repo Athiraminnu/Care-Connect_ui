@@ -6,6 +6,8 @@ function MyAppointments() {
   const [myAppointmentList, setMyAppointmentList] = useState([]);
   const user = localStorage.getItem("user") || "Guest";
   const navigate = useNavigate();
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
   useEffect(() => {
     fetchAllMyAppointments();
@@ -32,14 +34,14 @@ function MyAppointments() {
     })
       .then((response) => {
         if (response.ok) {
-          alert("Logged out successfully!")
+          alert("Logged out successfully!");
           navigate("/");
         } else {
           alert("Logout failed.");
         }
       })
       .catch((error) => {
-        console.error("Error:", error);   
+        console.error("Error:", error);
       });
   };
 
@@ -119,8 +121,16 @@ function MyAppointments() {
       >
         Logout
       </button>
+      <div>
+        <lable for="filter">Filter By </lable>
+        <select name="filter">
+          <option value={"all"}>All AllAppointments</option>
+          <option value={"upcomming"} selected>
+            Upcomming Appointments
+          </option>
+        </select>
+      </div>
       <div style={styles.tableContainer}>
-       <h2>Today's Date: {new Date().toLocaleDateString()}</h2>
         <table style={styles.table}>
           <thead>
             <tr>
@@ -136,15 +146,23 @@ function MyAppointments() {
                 <td style={styles.td}>{appointment.time}</td>
                 <td style={styles.td}>
                   <button
-                    className="bg bg-danger"
                     style={{
                       color: "white",
                       borderRadius: "4px",
                       padding: "4px",
                       border: "none",
                       width: "40%",
+                      cursor:
+                        new Date(appointment.date) < today
+                          ? "not-allowed"
+                          : "default",
+                      backgroundColor:
+                        new Date(appointment.date) < today
+                          ? "#ef8770"
+                          : "#d32905",
                     }}
                     type="submit"
+                    disabled={new Date(appointment.date) < today}
                     onClick={() =>
                       handleCancel(appointment.time, appointment.date)
                     }

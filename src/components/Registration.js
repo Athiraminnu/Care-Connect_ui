@@ -30,6 +30,7 @@ function Registration() {
 
       if (response.ok) {
         alert("User registered successfully!");
+        window.location.reload();
       } else {
         alert("Registration failed: " + JSON.stringify(data));
       }
