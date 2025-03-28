@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 function MyAppointments() {
   const [myAppointmentList, setMyAppointmentList] = useState([]);
+  const [filter, setFilter] = useState("");
   const user = localStorage.getItem("user") || "Guest";
   const navigate = useNavigate();
   const today = new Date();
@@ -11,11 +12,11 @@ function MyAppointments() {
 
   useEffect(() => {
     fetchAllMyAppointments();
-  }, [user]); // Dependency added
+  }, [filter]); // Dependency added
 
   const fetchAllMyAppointments = () => {
     axios
-      .get("http://127.0.0.1:8000/myappointments/", {
+      .get(`http://127.0.0.1:8000/myappointments/?filter=${filter}`, {
         headers: {
           UserInfo: user,
         },
@@ -101,6 +102,11 @@ function MyAppointments() {
     trHoverHover: {
       backgroundColor: "#f1f1f1",
     },
+    filter: {
+      marginLeft: "10%",
+      padding: "10px",
+      marginBottom: "10px",
+    },
   };
 
   return (
@@ -121,12 +127,16 @@ function MyAppointments() {
       >
         Logout
       </button>
-      <div>
-        <lable for="filter">Filter By </lable>
-        <select name="filter">
-          <option value={"all"}>All AllAppointments</option>
-          <option value={"upcomming"} selected>
-            Upcomming Appointments
+      <div style={styles.filter}>
+        <label htmlFor="filter">Filter By </label>
+        <select
+          name="filter"
+          className="p-1 rounded"
+          onChange={(e) => setFilter(e.target.value)}
+        >
+          <option value={"all"}>All Appointments</option>
+          <option value={"upcoming"} defaultValue={"upcoming"}>
+            Upcoming Appointments
           </option>
         </select>
       </div>
