@@ -29,23 +29,6 @@ function MyAppointments() {
       });
   };
 
-  const handleLogout = () => {
-    fetch("http://127.0.0.1:8000/logout", {
-      method: "POST",
-    })
-      .then((response) => {
-        if (response.ok) {
-          alert("Logged out successfully!");
-          navigate("/");
-        } else {
-          alert("Logout failed.");
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
-
   const handleCancel = (time, date) => {
     fetch("http://127.0.0.1:8000/cancel/", {
       method: "POST",
@@ -111,22 +94,6 @@ function MyAppointments() {
 
   return (
     <div>
-      <button
-        type="button"
-        onClick={handleLogout}
-        style={{
-          marginTop: "2%",
-          marginLeft: "92%",
-          padding: "6px",
-          width: "7%",
-          backgroundColor: "blue",
-          color: "white",
-          borderRadius: "4px",
-          border: "none",
-        }}
-      >
-        Logout
-      </button>
       <div style={styles.filter}>
         <label htmlFor="filter">Filter By </label>
         <select

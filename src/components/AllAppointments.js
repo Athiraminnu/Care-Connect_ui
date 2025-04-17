@@ -37,23 +37,6 @@ function AllAppointments() {
       });
   };
 
-    const handleLogout = () => {
-      fetch("http://127.0.0.1:8000/logout", {
-        method: "POST",
-      })
-        .then((response) => {
-          if (response.ok) {
-            alert("Logged out successfully!");
-            navigate("/"); 
-          } else {
-            alert("Logout failed.");
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    };
-
 
   const styles = {
     tableContainer: {
@@ -91,28 +74,12 @@ function AllAppointments() {
 
   return (
     <div>
-      <button
-        type="button"
-        onClick={handleLogout}
-        style={{
-          marginTop: "2%",
-          marginLeft: "92%",
-          padding: "6px",
-          width: "7%",
-          backgroundColor: "blue",
-          color: "white",
-          borderRadius: "4px",
-          border: "none",
-        }}
-      >
-        Logout
-      </button>
 
       <div>
         <label
           style={{
             marginLeft: "40%",
-            marginTop: "5%",
+            marginTop: "1%",
             marginBottom: "2%",
             fontWeight: "bold",
           }}

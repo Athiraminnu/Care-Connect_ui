@@ -59,21 +59,6 @@ function GeneratePass() {
     }
   };
 
-  const handleLogout = () => {
-    fetch("http://127.0.0.1:8000/logout", { method: "POST" })
-      .then((response) => {
-        if (response.ok) {
-          alert("Logged out successfully!");
-          navigate("/");
-        } else {
-          alert("Logout failed.");
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
-
   const styles = {
     container: {
       padding: "20px",
@@ -127,13 +112,7 @@ function GeneratePass() {
     dateCellHover: {
       transform: "scale(1.1)",
     },
-    appointmentsButton: {
-      marginTop: "20px",
-      backgroundColor: "#FF8D23",
-      padding: "10px",
-      border: "none",
-      borderRadius: "8px",
-    },
+
     linkText: {
       textDecoration: "none",
       color: "black",
@@ -143,9 +122,6 @@ function GeneratePass() {
 
   return (
     <div style={styles.container}>
-      <button type="button" onClick={handleLogout} style={styles.logoutButton}>
-        Logout
-      </button>
 
       <div style={styles.calendarContainer}>
         <h4>
@@ -202,11 +178,7 @@ function GeneratePass() {
         </div>
       </div>
 
-      <button type="button" style={styles.appointmentsButton}>
-        <a href="/userappointments" style={styles.linkText}>
-          My Appointments
-        </a>
-      </button>
+
     </div>
   );
 }

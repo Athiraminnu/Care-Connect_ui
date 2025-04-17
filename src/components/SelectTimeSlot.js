@@ -62,20 +62,6 @@ function SelectTimeSlot() {
     }
   };
 
-  const handleLogout = () => {
-    fetch("http://127.0.0.1:8000/logout", { method: "POST" })
-      .then((response) => {
-        if (response.ok) {
-          alert("Logged out successfully!");
-          navigate("/");
-        } else {
-          alert("Logout failed.");
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
 
   // **Styles**
   const styles = {
@@ -129,9 +115,6 @@ function SelectTimeSlot() {
 
   return (
     <div style={styles.container}>
-      <button type="button" onClick={handleLogout} style={styles.logoutButton}>
-        Logout
-      </button>
 
       <div style={styles.dateContainer}>
         <h6>Date of Appointment: {selectedDate}</h6>

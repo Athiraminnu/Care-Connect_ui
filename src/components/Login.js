@@ -8,9 +8,9 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Admin Credentials
-    // const adminUser = "doctor";
-    // const adminPassword = "Dr@1234hai";
+    //Admin Credentials
+    const adminUser = "DR";
+    const adminPassword = "dr@dr123";
 
     fetch("http://127.0.0.1:8000/login", {
       method: "POST",
@@ -23,7 +23,7 @@ function Login() {
       .then((data) => {
         if (data.message) {
           if (username && password) {
-            if (username === "doctor" && password === "Dr@1234hai") {
+            if (username === adminUser && password === adminPassword) {
               alert(`Logged in as Admin: ${username}`);
               localStorage.setItem("user", username);
               localStorage.setItem("role", "admin");
